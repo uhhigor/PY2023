@@ -1,6 +1,6 @@
 import random
 
-from assignments.a2.logger import Logger
+from logger import Logger
 
 
 class Sheep:
@@ -26,7 +26,9 @@ class Sheep:
         if self.alive:
             direction = random.randint(1, 4)
             if self.logger:
-                self.logger.log("DEBUG", f"{self.name} chose {self.direction[direction]}")
+                self.logger.log(
+                    "DEBUG",
+                    f"{self.name} chose {self.direction[direction]}")
                 if direction == 1:
                     self.position_x += self.movement_distance
                 elif direction == 2:
@@ -39,7 +41,10 @@ class Sheep:
                     raise Exception("Invalid direction")
 
                 if self.logger:
-                    self.logger.log("DEBUG", f"{self.name} moved to {self.position_x}, {self.position_y}")
+                    self.logger.log(
+                        "DEBUG",
+                        f"{self.name} moved to {self.position_x}, "
+                        f"{self.position_y}")
 
     def is_alive(self):
         return self.alive

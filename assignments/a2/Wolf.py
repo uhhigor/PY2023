@@ -1,6 +1,6 @@
 import math
 
-from assignments.a2.logger import Logger
+from logger import Logger
 
 
 class Wolf:
@@ -52,7 +52,10 @@ class Wolf:
                 closest_sheep = sheep
 
                 if self.logger:
-                    self.logger.log("DEBUG", f"Closest sheep is {closest_sheep.name} at {closest_sheep_distance}")
+                    self.logger.log(
+                        "DEBUG",
+                        f"Closest sheep is {closest_sheep.name} at "
+                        f"{closest_sheep_distance}")
 
         self.position_x += ((closest_sheep.position_x - self.position_x) /
                             closest_sheep_distance * self.movement_distance)
@@ -61,7 +64,8 @@ class Wolf:
 
         if self.logger:
             self.logger.log("INFO", "Wolf moved.")
-            self.logger.log("DEBUG", f"Wolf moved to {self.position_x}, {self.position_y}")
+            self.logger.log("DEBUG", f"Wolf moved to "
+                                     f"{self.position_x}, {self.position_y}")
             self.logger.log("INFO", f"Wolf is chasing {closest_sheep.name}")
 
         print(f"Wolf has moved to {round(self.position_x, 3)}, "

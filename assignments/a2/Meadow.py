@@ -3,7 +3,7 @@ import json
 
 from Sheep import Sheep
 from Wolf import Wolf
-from assignments.a2.logger import Logger
+from logger import Logger
 
 
 class Meadow:
@@ -58,7 +58,10 @@ class Meadow:
                     break
 
                 if self.logger:
-                    self.logger.log("INFO", f"Round {i + 1} ended. Number of sheep alive: {ship_alive}")
+                    self.logger.log(
+                        "INFO",
+                        f"Round {i + 1} ended. Number of sheep alive: "
+                        f"{ship_alive}")
 
                 if wait:
                     input("Press Enter to continue...")
