@@ -3,12 +3,12 @@ import math
 
 class Wolf:
 
-    def __init__(self, name: str, initial_position_x=0.0,
-                 initial_position_y=0.0, movement_distance=1.0):
+    def __init__(self, name: str, movement_distance: float, initial_position_x=0.0,
+                 initial_position_y=0.0):
         self.name = name
+        self.movement_distance = movement_distance
         self.position_x = initial_position_x
         self.position_y = initial_position_y
-        self.movement_distance = movement_distance
 
     def move_wolf(self, list_of_sheep: list):
         if sum(1 for sheep in list_of_sheep if sheep.is_alive()) == 0:
@@ -49,8 +49,8 @@ class Wolf:
                             closest_sheep_distance * self.movement_distance)
         self.position_y += ((closest_sheep.position_y - self.position_y) /
                             closest_sheep_distance * self.movement_distance)
-        print(f"Wolf moved to {round(self.position_x, 3)}, "
+        print(f"Wolf has moved to {round(self.position_x, 3)}, "
               f"{round(self.position_y, 3)}"
-              + f"\nWolf is chasing a {closest_sheep.name}")
+              + f"\nWolf is chasing {closest_sheep.name}")
 
         return sum(1 for sheep in list_of_sheep if sheep.is_alive())
