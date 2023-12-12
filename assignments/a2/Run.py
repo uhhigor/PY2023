@@ -2,17 +2,24 @@ import argparse
 import configparser
 import logging
 
-from assignments.a2 import Sheep, Wolf, Meadow
-from assignments.a2.logger import Logger
+import Sheep
+import Wolf
+import Meadow
+from logger import Logger
 
 
-def create_sheep(number_of_sheep: int, movement_distance: float, init_pos_limit: float, log: Logger = None):
+def create_sheep(number_of_sheep: int, movement_distance: float,
+                 init_pos_limit: float, log: Logger = None):
     list_of_sheep = []
     for i in range(number_of_sheep):
-        sheep = Sheep.Sheep(f"Sheep {i + 1}", movement_distance, init_pos_limit, log)
+        sheep = Sheep.Sheep(f"Sheep {i + 1}", movement_distance,
+                            init_pos_limit, log)
         list_of_sheep.append(sheep)
         if logger:
-            logger.log("DEBUG", f"Sheep {i + 1} created at {sheep.position_x}, {sheep.position_y}")
+            logger.log(
+                "DEBUG",
+                f"Sheep {i + 1} created at {sheep.position_x}, "
+                f"{sheep.position_y}")
 
     if logger:
         logger.log("INFO", "Initial position of all sheep were determined.")
@@ -21,11 +28,15 @@ def create_sheep(number_of_sheep: int, movement_distance: float, init_pos_limit:
 
 logger = None
 
-parser = argparse.ArgumentParser("Simulation: The Wolf, The Sheep, and The Meadow")
-parser.add_argument("-c", "--config", type=str, default="default_config.ini", help="Configuration file")
+parser = argparse.ArgumentParser("Simulation: The Wolf, "
+                                 "The Sheep, and The Meadow")
+parser.add_argument("-c", "--config", type=str,
+                    default="default_config.ini", help="Configuration file")
 parser.add_argument("-l", "--log", type=str, help="Log level")
-parser.add_argument("-r", "--rounds", type=int, default=50, help="Number of rounds")
-parser.add_argument("-s", "--sheep", type=int, default=15, help="Number of sheep")
+parser.add_argument("-r", "--rounds", type=int,
+                    default=50, help="Number of rounds")
+parser.add_argument("-s", "--sheep", type=int,
+                    default=15, help="Number of sheep")
 parser.add_argument("-w", "--wait", action="store_true")
 
 args = parser.parse_args()
@@ -41,7 +52,8 @@ if args.log:
 
         logger = Logger(args.log)
     else:
-        raise Exception("Log level must be DEBUG, INFO, WARNING, ERROR or CRITICAL")
+        raise Exception("Log level must be DEBUG, "
+                        "INFO, WARNING, ERROR or CRITICAL")
 if args.rounds < 1:
     raise Exception("Number of rounds must be greater than 0")
 if args.sheep < 1:
@@ -71,7 +83,8 @@ if logger:
                + f"\nSheep MoveDist: {config_sheep_movement_distance}"
                + f"\nWolf MoveDist: {config_wolf_movement_distance}")
 
-sheep_list = create_sheep(args.sheep, config_sheep_movement_distance, config_sheep_init_pos_limit, logger)
+sheep_list = create_sheep(args.sheep, config_sheep_movement_distance,
+                          config_sheep_init_pos_limit, logger)
 wolf = Wolf.Wolf("Wolf", config_wolf_movement_distance, logger=logger)
 meadow = Meadow.Meadow(args.rounds, args.sheep, sheep_list, wolf, logger)
 meadow.move_animals(args.wait)
