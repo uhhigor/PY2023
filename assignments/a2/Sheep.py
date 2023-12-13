@@ -23,28 +23,30 @@ class Sheep:
         self.logger = logger
 
     def move_sheep(self):
-        if self.alive:
-            direction = random.randint(1, 4)
-            if self.logger:
-                self.logger.log(
-                    "DEBUG",
-                    f"{self.name} chose {self.direction[direction]}")
-                if direction == 1:
-                    self.position_x += self.movement_distance
-                elif direction == 2:
-                    self.position_x -= self.movement_distance
-                elif direction == 3:
-                    self.position_y += self.movement_distance
-                elif direction == 4:
-                    self.position_y -= self.movement_distance
-                else:
-                    raise Exception("Invalid direction")
+        if not self.alive:
+            return
 
-                if self.logger:
-                    self.logger.log(
-                        "DEBUG",
-                        f"{self.name} moved to {self.position_x}, "
-                        f"{self.position_y}")
+        direction = random.randint(1, 4)
+        if self.logger:
+            self.logger.log(
+                "DEBUG",
+                f"{self.name} chose {self.direction[direction]}")
+
+        if direction == 1:
+            self.position_x += self.movement_distance
+        elif direction == 2:
+            self.position_x -= self.movement_distance
+        elif direction == 3:
+            self.position_y += self.movement_distance
+        elif direction == 4:
+            self.position_y -= self.movement_distance
+        else:
+            raise Exception("Invalid direction")
+
+        if self.logger:
+            self.logger.log(
+                "DEBUG",
+                f"{self.name} moved to {self.position_x}, {self.position_y}")
 
     def is_alive(self):
         return self.alive
