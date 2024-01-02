@@ -1,5 +1,5 @@
 from flask import request, Blueprint
-from assignments.a3.database.db import Database
+from assignments.a3.database.database import Database
 import json
 
 api = Blueprint('api', __name__)
