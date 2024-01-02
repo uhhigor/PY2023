@@ -1,0 +1,26 @@
+<html>
+<head>
+    <title>Assignment 3</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+    <body>
+        <div id="data_table">
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Category</th>
+                    <th>Data 1</th>
+                    <th>Data 2</th>
+                </tr>
+                {% for dict_item in result %}
+                <tr>
+                    <td>{{dict_item['id']}}</td>
+                    <td>{{dict_item['category']}}</td>
+                    <td>{{dict_item['data1']}}</td>
+                    <td>{{dict_item['data2']}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </body>
+</html>
