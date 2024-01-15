@@ -14,7 +14,7 @@ app = create_app()
 
 
 @app.errorhandler(404)
-def page_not_found(e):
+def page_not_found():
     return render_template('errors/404.html'), 404
 
 
@@ -27,9 +27,9 @@ def homepage():
 @app.route('/add', methods=['POST'])
 def add():
     response = requests.post('http://127.0.0.1:5000/api/data', json={
-        'category': request.form['category'],
-        'data1': request.form['data1'],
-        'data2': request.form['data2']
+        'category': int(request.form['category']),
+        'data1': float(request.form['data1']),
+        'data2': float(request.form['data2'])
     })
     if response.status_code == 200:
         return homepage()
@@ -43,7 +43,23 @@ def delete(record_id):
     if response.status_code == 200:
         return homepage()
     elif response.status_code == 404:
-        return render_template('errors/404.html', message=response.json(['message'])), 404
+        return render_template('errors/404.html', message=response.json()['message']), 404
+
+
+@app.route('/predict', methods=['GET', 'POST'])
+def predict():
+    if request.method == 'POST':
+        response = requests.post('http://127.0.0.1:5000/api/predictions', json={
+            "k_parameter": int(request.form['k_parameter']),
+            'data1': float(request.form['data1']),
+            'data2': float(request.form['data2'])
+        })
+        if response.status_code == 200:
+            return render_template('predict_result.html', message=response.json()['message']), 200
+        elif response.status_code == 400:
+            return render_template('errors/404.html', message=response.json()['message']), 400
+
+    return render_template('predict.html')
 
 
 if __name__ == '__main__':

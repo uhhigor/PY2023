@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Feature Prediction Form</title>
+</head>
+<body class="text-center">
+    <h2>Predict Category</h2>
+    <div class="container">
+        <div class="col-md-6 mx-auto">
+            <form method="post" action="/predict">
+                <label for="k_parameter">K parameter:</label>
+                <input class="form-control" type="number" name="k_parameter" id="k_parameter" required>
+
+                <label for="data1">Data 1:</label>
+                <input class="form-control" type="number" step="0.01" name="data1" id="data1" required>
+
+                <label for="data2">Data 2:</label>
+                <input class="form-control" type="number" step="0.01" name="data2" id="data2" required>
+
+                <button class="btn btn-primary mt-3" type="submit">Predict</button>
+            </form>
+        </div>
+    </div>
+    <p>Go back to <a href="/">Home</a></p>
+</body>
+</html>
