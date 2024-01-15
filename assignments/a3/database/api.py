@@ -10,13 +10,16 @@ db = Database()
 @api.route('/api/data', methods=['GET', 'POST'])
 def get_records():
     if request.method == 'POST':
-        print(request.json)
         parameters = request.json
-        print(parameters)
+        if not isinstance(parameters['category'], int):
+            return {'message': 'Invalid input: category must be an integer'}, 400
+        if not isinstance(parameters['data1'], float):
+            return {'message': 'Invalid input: data1 must be float'}, 400
+        if not isinstance(parameters['data2'], float):
+            return {'message': 'Invalid input: data2 must be float'}, 400
         last_id = db.add_record(parameters['category'], parameters['data1'], parameters['data2'])
         return {'id': last_id}, 200
     else:
-        print(db.get_records())
         return json.dumps(db.get_records()), 200
 
 
