@@ -43,7 +43,6 @@ def get_record(record_id):
 def predict_category():
     if request.method == 'POST':
         parameters = request.json
-        print(parameters)
         if not isinstance(parameters['data1'], float):
             return {'message': 'Invalid input: data1 must be float'}, 400
         if not isinstance(parameters['data2'], float):
