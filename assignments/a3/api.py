@@ -44,8 +44,6 @@ def predict_category():
     if request.method == 'POST':
         parameters = request.json
         print(parameters)
-        if not isinstance(parameters['k_parameter'], int) or parameters['k_parameter'] > 5:
-            return {'message': 'Invalid input: n_neighbors must be an integer not be larger than 5'}, 400
         if not isinstance(parameters['data1'], float):
             return {'message': 'Invalid input: data1 must be float'}, 400
         if not isinstance(parameters['data2'], float):
@@ -55,12 +53,10 @@ def predict_category():
         features = [[item['data1'], item['data2']] for item in data]
         labels = [item['category'] for item in data]
 
-        # Standardize the features
         scaler = StandardScaler()
         features_standardized = scaler.fit_transform(features)
 
-        # Train the k-nearest neighbors classifier
-        knn_classifier = KNeighborsClassifier(n_neighbors=5)
+        knn_classifier = KNeighborsClassifier()
         knn_classifier.fit(features_standardized, labels)
 
         input_data_standardized = scaler.transform([[parameters['data1'], parameters['data2']]])

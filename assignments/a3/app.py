@@ -1,7 +1,7 @@
 import requests
 from flask import Flask, request
 from flask import render_template
-from database.api import api
+from assignments.a3.api import api
 
 
 def create_app():
@@ -24,17 +24,20 @@ def homepage():
     return render_template('index.html', result=response)
 
 
-@app.route('/add', methods=['POST'])
+@app.route('/add', methods=['GET', 'POST'])
 def add():
-    response = requests.post('http://127.0.0.1:5000/api/data', json={
-        'category': int(request.form['category']),
-        'data1': float(request.form['data1']),
-        'data2': float(request.form['data2'])
-    })
-    if response.status_code == 200:
-        return homepage()
-    elif response.status_code == 400:
-        return render_template('errors/400.html', message=response.json()['message']), 400
+    if request.method == 'POST':
+        response = requests.post('http://127.0.0.1:5000/api/data', json={
+            'category': int(request.form['category']),
+            'data1': float(request.form['data1']),
+            'data2': float(request.form['data2'])
+        })
+        if response.status_code == 200:
+            return render_template('add.html'), 200
+        elif response.status_code == 400:
+            return render_template('errors/400.html', message=response.json()['message']), 400
+    elif request.method == 'GET':
+        return render_template('add.html')
 
 
 @app.route('/delete/<int:record_id>', methods=['POST'])
@@ -50,7 +53,6 @@ def delete(record_id):
 def predict():
     if request.method == 'POST':
         response = requests.post('http://127.0.0.1:5000/api/predictions', json={
-            "k_parameter": int(request.form['k_parameter']),
             'data1': float(request.form['data1']),
             'data2': float(request.form['data2'])
         })

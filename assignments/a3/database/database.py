@@ -1,3 +1,5 @@
+import os
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from assignments.a3.database.base import base, Record
@@ -6,7 +8,9 @@ from assignments.a3.database.base import base, Record
 class Database:
 
     def __init__(self):
-        engine = create_engine('sqlite:///database.db', echo=False)
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        db_path = os.path.join(base_dir, 'database.db')
+        engine = create_engine(f'sqlite:///{db_path}', echo=False)
         base.metadata.create_all(engine)
         self.session = sessionmaker(bind=engine)()
 
